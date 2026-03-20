@@ -12,10 +12,7 @@ app.use(express.json());
 // Initialize DB
 connectDB();
 
-// Basic route to test server
-app.get('/', (req, res) => {
-  res.send('Welcome to the Purple Cream API');
-});
+app.use('/api', require('./routes'));
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

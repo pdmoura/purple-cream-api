@@ -1,10 +1,11 @@
 const { body, param, validationResult } = require("express-validator");
 
+const checkId = () => {
+	return [param("id").isMongoId().withMessage("Invalid ID")];
+};
+
 const productValidationRules = () => {
 	return [
-		param("id")
-			.isMongoId()
-			.withMessage("Invalid ID"),
 		body("name")
 			.trim()
 			.notEmpty()
@@ -40,9 +41,6 @@ const productValidationRules = () => {
 
 const teamValidationRules = () => {
 	return [
-		param("id")
-			.isMongoId()
-			.withMessage("Invalid ID"),
 		body("name")
 			.trim()
 			.notEmpty()
@@ -73,9 +71,15 @@ const teamValidationRules = () => {
 			.isIn(["Founder", "Management", "Staff"])
 			.withMessage("Invalid role"),
 		body("email")
-			.optional()
+			.trim()
+			.notEmpty()
+			.withMessage("Email is required")
 			.isEmail()
 			.withMessage("Must be a valid email address"),
+		body("hobbies")
+			.optional()
+			.isArray()
+			.withMessage("Hobbies must be an array of strings"),
 	];
 };
 
@@ -87,4 +91,9 @@ const validate = (req, res, next) => {
 	return res.status(400).json({ errors: errors.array() });
 };
 
-module.exports = { productValidationRules, teamValidationRules, validate };
+module.exports = {
+	checkId,
+	productValidationRules,
+	teamValidationRules,
+	validate,
+};
