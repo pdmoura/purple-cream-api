@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const TeamSchema = new mongoose.Schema({
   name: { type: String, required: true },             
@@ -7,11 +7,11 @@ const TeamSchema = new mongoose.Schema({
   image: { type: String, required: true },            
   role: {                                             
     type: String, 
-    enum: ['Founder', 'Management', 'Staff'], 
-    default: 'Staff' 
+    enum: ["Founder", "Management", "Staff"], 
+    default: "Staff" 
   },
   email: { type: String, required: true },                                     
   hobbies: { type: [String], default: [] }            
 }, { timestamps: true });
 
-module.exports = mongoose.model('Team', TeamSchema);
+module.exports = mongoose.model("Team", TeamSchema);

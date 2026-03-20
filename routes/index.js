@@ -5,7 +5,8 @@ router.use("/products", require("./products"));
 router.use("/team", require("./team"));
 
 router.get("/", (req, res) => {
-	res.send("Purple Cream API");
+  // #swagger.ignore = true
+  res.redirect("/api/api-docs");
 });
 
 router.use("/", require("./swagger"));
