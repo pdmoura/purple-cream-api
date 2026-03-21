@@ -20,7 +20,7 @@ A secure RESTful API for managing an Açaí shop’s inventory and staff. Built 
 ## Getting Started
 
 ### 1. Prerequisites
-- Node.js (v16+)
+- Node.js (v18+)
 - A MongoDB Atlas Account
 - Google Cloud Console credentials (for OAuth)
 
@@ -58,7 +58,7 @@ node seed.js
 
 ## API Documentation
 Once the server is running, visit the interactive Swagger documentation at:
-http://localhost:3000/api-docs
+http://localhost:3000/api/api-docs
 
 ## Deployment
 This project is configured for one-click deployment on Render. Ensure that all environment variables listed above are added to the Environment section in your Render dashboard.
