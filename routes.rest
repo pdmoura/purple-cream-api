@@ -1,0 +1,101 @@
+### =============================================
+### Variables
+### =============================================
+@baseUrl = http://localhost:3000/api
+
+
+### =============================================
+###            PRODUCT ROUTES
+### =============================================
+
+### Get All Products
+GET {{baseUrl}}/products HTTP/1.1
+
+###
+
+### Create a Product
+# @name createProduct
+POST {{baseUrl}}/products HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "Purple Power Bowl",
+  "ingredients": "Acai, Blueberries, Granola, Almond Butter",
+  "price": 15.90,
+  "image": "https://images.unsplash.com/photo-1590301157890-4810ed352733",
+  "category": "Premium Bowl",
+  "calories": 520,
+  "available": true,
+  "isVegan": true
+}
+
+###
+
+@productId = {{createProduct.response.body._id}}
+
+### Get Single Product
+GET {{baseUrl}}/products/{{productId}} HTTP/1.1
+
+###
+
+### Update Product (partial update)
+PUT {{baseUrl}}/products/{{productId}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "price": 18.50,
+  "available": false
+}
+
+###
+
+### Delete Product
+DELETE {{baseUrl}}/products/{{productId}} HTTP/1.1
+
+
+### =============================================
+###            TEAM ROUTES
+### =============================================
+
+### Get All Team Members
+GET {{baseUrl}}/team HTTP/1.1
+
+###
+
+### Create a Team Member
+# @name createTeamMember
+POST {{baseUrl}}/team HTTP/1.1
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "title": "Chief Acai Officer",
+  "description": "Acai enthusiast with 10 years of experience",
+  "image": "https://example.com/john.jpg",
+  "role": "Founder",
+  "email": "john@purplecream.com",
+  "hobbies": ["Surfing", "Healthy Living"]
+}
+
+###
+
+@teamMemberId = {{createTeamMember.response.body._id}}
+
+### Get Single Team Member
+GET {{baseUrl}}/team/{{teamMemberId}} HTTP/1.1
+
+###
+
+### Update Team Member (partial update)
+PUT {{baseUrl}}/team/{{teamMemberId}} HTTP/1.1
+Content-Type: application/json
+
+{
+  "title": "CEO",
+  "role": "Management"
+}
+
+###
+
+### Delete Team Member
+DELETE {{baseUrl}}/team/{{teamMemberId}} HTTP/1.1
