@@ -4,29 +4,32 @@ const checkId = () => {
   return [param("id").isMongoId().withMessage("Invalid ID")];
 };
 
-const productValidationRules = () => {
+const productRules = (isUpdate = false) => {
+  const field = (name) => (isUpdate ? body(name).optional() : body(name));
+
   return [
-    body("name")
+    field("name")
       .trim()
       .notEmpty()
-      .withMessage("Name is required")
+      .withMessage("Name cannot be empty")
       .isString()
       .withMessage("Name must be a string"),
-    body("ingredients")
+    field("ingredients")
       .trim()
       .notEmpty()
-      .withMessage("Ingredients are required")
+      .withMessage("Ingredients cannot be empty")
       .isString()
       .withMessage("Ingredients must be a string"),
-    body("price")
+    field("price")
       .isFloat({ min: 0 })
       .withMessage("Price must be a positive number"),
-    body("image")
+    field("image")
       .trim()
       .notEmpty()
-      .withMessage("Image URL is required")
+      .withMessage("Image URL cannot be empty")
       .isString()
       .withMessage("Image must be a string"),
+      
     body("category")
       .optional()
       .isString()
@@ -39,43 +42,46 @@ const productValidationRules = () => {
   ];
 };
 
-const teamValidationRules = () => {
+const teamRules = (isUpdate = false) => {
+  const field = (name) => (isUpdate ? body(name).optional() : body(name));
+
   return [
-    body("name")
+    field("name")
       .trim()
       .notEmpty()
-      .withMessage("Name is required")
+      .withMessage("Name cannot be empty")
       .isString()
       .withMessage("Name must be a string"),
-    body("title")
+    field("title")
       .trim()
       .notEmpty()
-      .withMessage("Title is required")
+      .withMessage("Title cannot be empty")
       .isString()
       .withMessage("Title must be a string"),
-    body("description")
+    field("description")
       .trim()
       .notEmpty()
-      .withMessage("Description is required")
+      .withMessage("Description cannot be empty")
       .isString()
       .withMessage("Description must be a string"),
-    body("image")
+    field("image")
       .trim()
       .notEmpty()
-      .withMessage("Image URL is required")
+      .withMessage("Image URL cannot be empty")
       .isString()
       .withMessage("Image must be a string"),
+    field("email")
+      .trim()
+      .notEmpty()
+      .withMessage("Email cannot be empty")
+      .isEmail()
+      .withMessage("Must be a valid email address"),
+      
     body("role")
       .optional()
       .isString()
       .isIn(["Founder", "Management", "Staff"])
       .withMessage("Invalid role"),
-    body("email")
-      .trim()
-      .notEmpty()
-      .withMessage("Email is required")
-      .isEmail()
-      .withMessage("Must be a valid email address"),
     body("hobbies")
       .optional()
       .isArray()
@@ -91,9 +97,10 @@ const validate = (req, res, next) => {
   return res.status(400).json({ errors: errors.array() });
 };
 
+
 module.exports = {
   checkId,
-  productValidationRules,
-  teamValidationRules,
+  productRules,
+  teamRules,
   validate,
 };

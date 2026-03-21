@@ -14,7 +14,10 @@
   "paths": {
     "/products/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Products"
+        ],
+        "description": "Retrieve all products from the database",
         "responses": {
           "200": {
             "description": "OK"
@@ -25,7 +28,60 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Products"
+        ],
+        "description": "Endpoint to create a new bowl or dish",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Product data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Purple Power Bowl"
+                },
+                "ingredients": {
+                  "type": "string",
+                  "example": "Acai, Blueberries, Granola, Almond Butter"
+                },
+                "price": {
+                  "type": "number",
+                  "example": 15.9
+                },
+                "image": {
+                  "type": "string",
+                  "example": "https://images.unsplash.com/photo-1590301157890-4810ed352733"
+                },
+                "category": {
+                  "type": "string",
+                  "example": "Premium Bowl"
+                },
+                "calories": {
+                  "type": "number",
+                  "example": 520
+                },
+                "available": {
+                  "type": "boolean",
+                  "example": true
+                },
+                "isVegan": {
+                  "type": "boolean",
+                  "example": true
+                }
+              },
+              "required": [
+                "name",
+                "ingredients",
+                "price",
+                "image"
+              ]
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -41,7 +97,10 @@
     },
     "/products/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Products"
+        ],
+        "description": "Retrieve a single product by its ID",
         "parameters": [
           {
             "name": "id",
@@ -66,13 +125,34 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Products"
+        ],
+        "description": "Update an existing product by its ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Partial or full product data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "price": {
+                  "type": "number",
+                  "example": 16.5
+                },
+                "available": {
+                  "type": "boolean",
+                  "example": false
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -91,7 +171,10 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Products"
+        ],
+        "description": "Delete a product from the database permanently",
         "parameters": [
           {
             "name": "id",
@@ -118,7 +201,10 @@
     },
     "/team/": {
       "get": {
-        "description": "",
+        "tags": [
+          "Team"
+        ],
+        "description": "Retrieve all team members",
         "responses": {
           "200": {
             "description": "OK"
@@ -129,7 +215,63 @@
         }
       },
       "post": {
-        "description": "",
+        "tags": [
+          "Team"
+        ],
+        "description": "Create a new team member",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Team member data",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "John Doe"
+                },
+                "title": {
+                  "type": "string",
+                  "example": "Chief Acai Officer"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Acai enthusiast with 10 years of experience"
+                },
+                "image": {
+                  "type": "string",
+                  "example": "https://example.com/john.jpg"
+                },
+                "role": {
+                  "type": "string",
+                  "example": "Founder"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "john@purplecream.com"
+                },
+                "hobbies": {
+                  "type": "array",
+                  "example": [
+                    "Surfing",
+                    "Healthy Living"
+                  ],
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "name",
+                "title",
+                "description",
+                "image",
+                "email"
+              ]
+            }
+          }
+        ],
         "responses": {
           "201": {
             "description": "Created"
@@ -145,7 +287,10 @@
     },
     "/team/{id}": {
       "get": {
-        "description": "",
+        "tags": [
+          "Team"
+        ],
+        "description": "Retrieve a team member by ID",
         "parameters": [
           {
             "name": "id",
@@ -170,13 +315,34 @@
         }
       },
       "put": {
-        "description": "",
+        "tags": [
+          "Team"
+        ],
+        "description": "Update a team member by ID",
         "parameters": [
           {
             "name": "id",
             "in": "path",
             "required": true,
             "type": "string"
+          },
+          {
+            "name": "obj",
+            "in": "body",
+            "description": "Team member data to update",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "example": "CEO"
+                },
+                "role": {
+                  "type": "string",
+                  "example": "Management"
+                }
+              }
+            }
           }
         ],
         "responses": {
@@ -195,7 +361,10 @@
         }
       },
       "delete": {
-        "description": "",
+        "tags": [
+          "Team"
+        ],
+        "description": "Remove a team member from the database",
         "parameters": [
           {
             "name": "id",
