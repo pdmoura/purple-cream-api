@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 
-router.get("/", (req, res) => {
+router.get("/login", (req, res) => {
   // #swagger.ignore = true
   if (req.isAuthenticated && req.isAuthenticated()) {
     return res.send(`
@@ -97,6 +97,28 @@ router.get("/", (req, res) => {
                   background: #1e2227;
               }
 
+              .docs-btn {
+                  background: transparent;
+                  color: #622262;
+                  border: 2px solid #622262;
+                  border-radius: 8px;
+                  padding: 13px 20px;
+                  font-size: 16px;
+                  font-weight: 500;
+                  cursor: pointer;
+                  width: 100%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  transition: all 0.2s ease;
+                  text-decoration: none;
+                  margin-top: 16px;
+              }
+
+              .docs-btn:hover {
+                  background: #fdf5fd;
+              }
+
               .github-icon {
                   width: 24px;
                   height: 24px;
@@ -142,6 +164,10 @@ router.get("/", (req, res) => {
                   Continue with GitHub
               </a>
 
+              <a href="/api/api-docs" class="docs-btn">
+                  Go to API Documentation
+              </a>
+
               <div class="divider"></div>
 
               <p class="info">
@@ -164,11 +190,11 @@ router.get("/github/callback",
     passport.authenticate("github", (err, user, info) => {
       if (err) {
         console.error("Passport Error:", err);
-        return res.redirect("/");
+        return res.redirect("/login");
       }
       if (!user) {
         console.error("Passport Failed - no user returned. Info:", info);
-        return res.redirect("/");
+        return res.redirect("/login");
       }
       req.logIn(user, (err) => {
         if (err) {
@@ -176,7 +202,7 @@ router.get("/github/callback",
           return next(err);
         }
         console.log("Session established for:", req.user.username);
-        return res.redirect("/");
+        return res.redirect("/login");
       });
     })(req, res, next);
   }
@@ -186,8 +212,13 @@ router.get("/logout", (req, res, next) => {
   // #swagger.ignore = true
   req.logout((err) => {
     if (err) { return next(err); }
-    res.redirect("/");
+    res.redirect("/login");
   });
+});
+
+router.get("/", (req, res) => {
+  // #swagger.ignore = true
+  res.redirect("/login");
 });
 
 module.exports = router;

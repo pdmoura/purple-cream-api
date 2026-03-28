@@ -24,7 +24,7 @@ app.use(cors());
 app.use(express.json()); 
 
 app.use(session({
-  secret: process.env.SESSION_SECRET || "purple-cream-secret",
+  secret: process.env.SESSION_SECRET || "purple-cream-really-long-secret-session-for-security",
   resave: false,
   saveUninitialized: true,
 }));
