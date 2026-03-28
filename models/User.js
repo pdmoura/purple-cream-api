@@ -10,6 +10,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  displayName: {
+    type: String,
+  },
   profileUrl: {
     type: String,
   },

@@ -39,18 +39,19 @@ passport.use(new GitHubStrategy({
   },
   async function(accessToken, refreshToken, profile, done) {
     try {
-      let user = await User.findOne({ githubId: profile.id });
-      if (!user) {
-        user = await User.create({
-          githubId: profile.id,
+      let user = await User.findOneAndUpdate(
+        { githubId: profile.id },
+        {
           username: profile.username,
+          displayName: profile.displayName || profile.username,
           profileUrl: profile.profileUrl,
           avatarUrl: profile.photos && profile.photos.length > 0 ? profile.photos[0].value : null
-        });
-      }
-      console.log("Successfully authenticated user:", user.username);
+        },
+        { new: true, upsert: true }
+      );
       return done(null, user);
     } catch (err) {
+      console.error("Error during GitHub strategy:", err);
       return done(err, null);
     }
   }
@@ -68,6 +69,7 @@ passport.deserializeUser(async (id, done) => {
     done(err, null);
   }
 });
+
 // Initialize DB
 connectDB();
 

@@ -7,7 +7,7 @@ router.get("/", (req, res) => {
   if (req.isAuthenticated && req.isAuthenticated()) {
     return res.send(`
       <div style="font-family: sans-serif; text-align: center; margin-top: 50px;">
-        <h2>Logged in as ${req.user.username}</h2>
+        <h2>Logged in as ${req.user.displayName || req.user.username}</h2>
         <a href="/api/api-docs" style="display:inline-block; margin-top:20px; padding:10px 20px; background:#622262; color:#fff; text-decoration:none; border-radius:5px;">Go to API Docs</a>
         <br><br>
         <a href="/logout" style="color: #666;">Logout</a>
