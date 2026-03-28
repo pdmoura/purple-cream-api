@@ -5,8 +5,8 @@ router.use("/products", require("./products"));
 router.use("/team", require("./team"));
 
 router.get("/", (req, res) => {
-	// #swagger.ignore = true
-	res.redirect("/");
+  // #swagger.ignore = true
+  res.redirect("/");
 });
 
 router.use("/", require("./swagger"));

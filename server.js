@@ -33,28 +33,28 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(new GitHubStrategy({
-    clientID: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: process.env.GITHUB_CALLBACK_URL
-  },
-  async function(accessToken, refreshToken, profile, done) {
-    try {
-      let user = await User.findOneAndUpdate(
-        { githubId: profile.id },
-        {
-          username: profile.username,
-          displayName: profile.displayName || profile.username,
-          profileUrl: profile.profileUrl,
-          avatarUrl: profile.photos && profile.photos.length > 0 ? profile.photos[0].value : null
-        },
-        { new: true, upsert: true }
-      );
-      return done(null, user);
-    } catch (err) {
-      console.error("Error during GitHub strategy:", err);
-      return done(err, null);
-    }
+  clientID: process.env.GITHUB_CLIENT_ID,
+  clientSecret: process.env.GITHUB_CLIENT_SECRET,
+  callbackURL: process.env.GITHUB_CALLBACK_URL
+},
+async function(accessToken, refreshToken, profile, done) {
+  try {
+    let user = await User.findOneAndUpdate(
+      { githubId: profile.id },
+      {
+        username: profile.username,
+        displayName: profile.displayName || profile.username,
+        profileUrl: profile.profileUrl,
+        avatarUrl: profile.photos && profile.photos.length > 0 ? profile.photos[0].value : null
+      },
+      { new: true, upsert: true }
+    );
+    return done(null, user);
+  } catch (err) {
+    console.error("Error during GitHub strategy:", err);
+    return done(err, null);
   }
+}
 ));
 
 passport.serializeUser((user, done) => {
